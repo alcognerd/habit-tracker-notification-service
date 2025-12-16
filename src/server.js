@@ -11,9 +11,8 @@ const PORT = process.env.PORT || 3000;
 
 app.get("/api/ping", async (req, res) => {
   try {
-    const result = await ping();
-    const data = await result.json();
-    console.log(data);
+    const result = await ping(); // assume ping() returns data directly
+    console.log(result);
     res.json({ message: "Ping complete", result });
   } catch (error) {
     res.status(500).json({ message: "Ping failed", error: error.message });
@@ -22,12 +21,14 @@ app.get("/api/ping", async (req, res) => {
 
 app.get("/api/notification", async (req, res) => {
   try {
-    const res = await handler();
-    console.log(res);
+    const result = await handler(); // FIX: don't shadow `res`
+    console.log(result);
+    res.json({ message: "cron completed", result });
   } catch (e) {
-    res.status(500).json({ message: "cron failled", error: e.message });
+    res.status(500).json({ message: "cron failed", error: e.message });
   }
 });
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
