@@ -6,11 +6,14 @@ import handler from "./api/cron.js";
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 app.get("/api/ping", async (req, res) => {
   try {
     const result = await ping();
+    const data = await result.json();
+    console.log(data);
     res.json({ message: "Ping complete", result });
   } catch (error) {
     res.status(500).json({ message: "Ping failed", error: error.message });
