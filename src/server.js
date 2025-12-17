@@ -22,7 +22,6 @@ app.get("/api/ping", async (req, res) => {
 app.get("/api/notification", async (req, res) => {
   try {
     await handler(); // FIX: don't shadow `res`
-    console.log(result);
     res.json({ message: "cron completed", result });
   } catch (e) {
     res.status(500).json({ message: "cron failed", error: e.message });
