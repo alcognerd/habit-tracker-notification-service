@@ -21,7 +21,7 @@ app.get("/api/ping", async (req, res) => {
 
 app.get("/api/notification", async (req, res) => {
   try {
-    const result = await handler(); // FIX: don't shadow `res`
+    await handler(); // FIX: don't shadow `res`
     console.log(result);
     res.json({ message: "cron completed", result });
   } catch (e) {
